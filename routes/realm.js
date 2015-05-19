@@ -52,6 +52,6 @@ router.route('/:id')
       }
       return;
     });
-  })
+  });
 
 module.exports = router;

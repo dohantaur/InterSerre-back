@@ -8,21 +8,25 @@ var port = process.env.PORT || 3000;
 var bodyParser = require('body-parser')
 app.use(bodyParser.json());
 
-// Connect to mongodb
-/*var connect = function () {
-  //var options = { server: { socketOptions: { keepAlive: 1 } } };
-  mongoose.connect(config.db);
-};
-connect();
+var allowCrossDomain = function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization, Content-Length, X-Requested-With');
 
-mongoose.connection.on('error', console.log);
-mongoose.connection.on('disconnected', connect);*/
+  // intercept OPTIONS method
+  if ('OPTIONS' == req.method) {
+    res.sendStatus(200);
+  }
+  else {
+    next();
+  }
+};
 
 var greenhouse = require('./routes/green-house');
 var realm = require('./routes/realm');
 
 app.use('/realms', realm);
-app.use('/greenhouses', greenhouse);
+app.use('/greenHouses', greenhouse);
 
 
 app.get('/', function(req, res) {
@@ -42,7 +46,6 @@ app.use(function(req, res, next) {
 
 app.use(function(err, req, res, next) {
     if(err) {
-      console.log(err);
       return res.status(err.status).json(err);
     }
 });
