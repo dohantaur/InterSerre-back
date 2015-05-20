@@ -88,11 +88,10 @@ router.route('/')
       if(result) {
       }
       if(body) {
-        //console.log(body);
         return res.json(parseResult(body));
       }
     });
-  });
+  })
 router.route('/:id')
   .put(function(req, res) {
     var bodyTransform = req.body.greenHouse;
@@ -109,7 +108,6 @@ router.route('/:id')
         return res.status(500).json({error: err});
       }
       if(body) {
-        console.log(body);
         return res.json(req.body);
       }
       if(result) {

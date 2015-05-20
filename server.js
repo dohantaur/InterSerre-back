@@ -1,7 +1,7 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var config = require('./config');
-
+var serveStatic = require('serve-static');
 var app = express();
 var port = process.env.PORT || 3000;
 
@@ -22,11 +22,15 @@ var allowCrossDomain = function(req, res, next) {
   }
 };
 
+app.use('/static', serveStatic(__dirname + '/public/static'));
+app.use('/assets', serveStatic(__dirname + '/public/assets'));
+app.use(require('./middlewares/serve-static'));
+
 var greenhouse = require('./routes/green-house');
 var realm = require('./routes/realm');
 
-app.use('/realms', realm);
-app.use('/greenHouses', greenhouse);
+app.use('/api/realms', realm);
+app.use('/api/greenHouses', greenhouse);
 
 
 app.get('/', function(req, res) {
@@ -37,15 +41,11 @@ app.listen(port, function() {
   console.log('Express app started on port ' + port);
 });
 
-app.use(function(req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    err.name = 'not found';
-    next(err);
-});
-
+app.use(require('./middlewares/handle-error'));
 app.use(function(err, req, res, next) {
     if(err) {
       return res.status(err.status).json(err);
     }
 });
+
+module.exports = app;

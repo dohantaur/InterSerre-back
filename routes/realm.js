@@ -21,7 +21,6 @@ function parseResult(payload, params) {
       id: generateId(contextElement.id, elem.name)
     }
     _.forEach(elem.metadatas, function(metadata) {
-      console.log(metadata);
       sensor[metadata.name] =metadata.value;
     });
     realm.sensors.push(sensor);
@@ -41,11 +40,9 @@ router.route('/:id')
 
     request.get(options, function(err, result, body) {
       if(err) {
-        console.log(err);
         return res.json({error: err});
       }
       if(result) {
-        console.log('RESULT 2');
       }
       if(body) {
         return res.json(parseResult(body));

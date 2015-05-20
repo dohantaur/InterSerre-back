@@ -1,3 +1,8 @@
 module.exports = {
-  db: 'mongodb://localhost/interserre'
+  db: 'mongodb://localhost/interserre',
+  serveRoutes: [
+    '/',
+    '/realms',
+    '/greenHouses'
+  ]
 }
