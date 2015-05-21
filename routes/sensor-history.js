@@ -7,8 +7,7 @@ var moment = require('moment')
 var hierarchy = null;
 
 function buildQuery() {
-  var uri = 'http://10.251.98.136:8080/hostabee-1.0-SNAPSHOT/hive?query=select%20*%20from%20interserre';
-  console.log(uri);
+  var uri = 'http://130.211.103.49:8080/hostabee-1.0-SNAPSHOT/hive';
   return uri;
 }
 
@@ -93,7 +92,6 @@ function formatForGlobalByRealm(payload) {
   });
 
   _.forEach(allFirstCharts, function(item, index) {
-    console.log(item.realm);
     allFirstCharts[index].data = {
       xs: {
         temperature: 'x1',
@@ -134,7 +132,6 @@ function formatForGlobalByRealm(payload) {
       }
     }
   });
-  console.log(finalChart2);
   return(allFirstCharts);
 }
 
