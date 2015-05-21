@@ -21,6 +21,7 @@ var allowCrossDomain = function(req, res, next) {
     next();
   }
 };
+app.use(allowCrossDomain);
 
 app.use('/static', serveStatic(__dirname + '/public/static'));
 app.use('/assets', serveStatic(__dirname + '/public/assets'));
@@ -28,10 +29,11 @@ app.use(require('./middlewares/serve-static'));
 
 var greenhouse = require('./routes/green-house');
 var realm = require('./routes/realm');
+var history = require('./routes/sensor-history');
 
 app.use('/api/realms', realm);
 app.use('/api/greenHouses', greenhouse);
-
+app.use('/api/analysis', history);
 
 app.get('/', function(req, res) {
   res.send({'index': 'coucou'});
