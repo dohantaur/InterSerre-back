@@ -30,10 +30,12 @@ app.use(require('./middlewares/serve-static'));
 var greenhouse = require('./routes/green-house');
 var realm = require('./routes/realm');
 var history = require('./routes/sensor-history');
+var action = require('./routes/actions');
 
 app.use('/api/realms', realm);
 app.use('/api/greenHouses', greenhouse);
 app.use('/api/analysis', history);
+app.use('/api/actions', action);
 
 app.get('/', function(req, res) {
   res.send({'index': 'coucou'});
